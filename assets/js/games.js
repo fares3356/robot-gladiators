@@ -70,11 +70,18 @@ var startGame = function() {
   playerMoney = 10;
   for (var i = 0; i < enemyNames.length; i++) {
     if (playerHealth > 0) {
-            window.alert("Welcome to Robot Gladiators! Round " +(i+1));
-            var pickedEnemyName = enemyNames[i];
-            enemyHealth = 50;
-            fight(pickedEnemyName);
-    } else {
+         window.alert("Welcome to Robot Gladiators! Round " +(i+1));
+        var pickedEnemyName = enemyNames[i];
+        enemyHealth = 50;
+        fight(pickedEnemyName);
+        if(playerHealth >0 && i < enemyNames.length -1) {
+            var confirmStore = window.confirm("This fight is over, do you want to enter the store before the next round?")
+            if(confirmStore) {
+            shop();
+            }
+        }
+    } 
+    else {
         window.alert("You have lost your robot in battle! Game Over!");
         break;
         }
@@ -102,7 +109,52 @@ var endGame = function() {
     else {
       window.alert("Thank you for playing Robot Gladiators! Come back soon!");
     }
-  }
+}
+
+// Adding a shop function
+var shop = function() {
+    var shopOptionPrompt = window.prompt(
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+    );
+    // use switch to carry out action
+    switch (shopOptionPrompt) {
+        case "REFILL": // new case
+        case "refill":
+          if (playerMoney >= 7) {
+            window.alert("Refilling player's health by 20 for 7 dollars.");
+      
+            playerHealth = playerHealth + 20;
+            playerMoney = playerMoney - 7;
+          }
+          else {
+            window.alert("You don't have enough money!");
+          }
+      
+          break;
+        case "UPGRADE": // new case
+        case "upgrade":
+          if (playerMoney >= 7) {
+            window.alert("Upgrading player's attack by 6 for 7 dollars.");
+      
+            playerAttack = playerAttack + 6;
+            playerMoney = playerMoney - 7;
+          }
+          else {
+            window.alert("You don't have enough money!");
+          }
+      
+          break;
+        case "LEAVE": // new case
+        case "leave":
+          window.alert("Leaving the store.");
+          break;
+        default:
+          window.alert("You did not pick a valid option. Try again.");
+          shop();
+          break;
+      }
+      
+}
 
 //This starts the game
 startGame();
